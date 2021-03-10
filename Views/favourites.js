@@ -2,7 +2,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {View, ScrollView, StyleSheet, Text} from 'react-native';
-import {removeFavAction, setCrntPdt, setFavAction} from '../Redux/actions';
+import {
+  removeFavAction,
+  setCrntPdt,
+  setFavAction,
+  removeCartAction,
+  addCartAction,
+} from '../Redux/actions';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import UseHeader from '../Helpers/UseHeader';
 import HigherOrderScreen from '../Helpers/HigherOrderScreen';
@@ -16,7 +22,10 @@ export const Favourites = (props) => {
     NavPointer.Navigate('SinglePrd');
   };
 
+  const addToCart = (i) => props.addCartAction(i);
   const goBack = () => NavPointer.Navigate('MainScreen');
+  const removeFromCart = (i) =>
+    props.cart[i.id].added !== 0 && props.removeCartAction(i);
 
   return (
     <HigherOrderScreen style={{backgroundColor: 'white'}}>
@@ -39,6 +48,9 @@ export const Favourites = (props) => {
                   favs={props.favs}
                   removeFavAct={(id) => props.removeFavAction(id)}
                   setFavAct={(i) => props.setFavAction(i)}
+                  addToCart={addToCart}
+                  itemInCard={props.cart[item.id]}
+                  removeFromCart={removeFromCart}
                 />
               );
             })
@@ -60,6 +72,7 @@ export const Favourites = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    cart: state.cartReducer.items,
     favs: state.toggleFav,
   };
 };
@@ -68,6 +81,8 @@ export default connect(mapStateToProps, {
   removeFavAction,
   setCrntPdt,
   setFavAction,
+  removeCartAction,
+  addCartAction,
 })(Favourites);
 
 const styles = StyleSheet.create({

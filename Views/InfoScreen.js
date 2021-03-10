@@ -19,32 +19,23 @@ import UseHeader from '../Helpers/UseHeader';
 const ConfirmOrder = (props) => {
   const [firstName, setFirstName] = useState('');
   const [firstNameErrMsg, setFirstNameErrMsg] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [lastNameErrMsg, setLastNameErrMsg] = useState('');
   const [email, setEmail] = useState('');
   const [emailErrMsg, setEmailErrMsg] = useState('');
   const [phone, setPhone] = useState('');
   const [phoneErrMsg, setPhoneErrMsg] = useState('');
   const [address, setAddress] = useState('');
   const [addressErrMsg, setAddressErrMsg] = useState('');
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const Confirm = () => {
-    const formValidResponse = isFormValid(
-      firstName,
-      lastName,
-      email,
-      phone,
-      address,
-    );
+    const formValidResponse = isFormValid(firstName, email, phone, address);
     if (!formValidResponse.status) {
       errorMsgHandler(formValidResponse.errCategory, formValidResponse.errMsg);
     } else {
       CallApi();
       props.UserAction({
         firstName: firstName,
-        lastName: lastName,
         email: email,
         phone: phone,
         address: address,
@@ -73,11 +64,10 @@ const ConfirmOrder = (props) => {
           },
           body: JSON.stringify({
             firstname: firstName,
-            lastname: lastName,
             phonenumber: phone,
             address: address,
             email: email,
-            appname: 'Ball Collection',
+            appname: 'Grannys Cookies',
           }),
         },
       );
@@ -93,32 +83,22 @@ const ConfirmOrder = (props) => {
     if (errCategory === 'email') {
       setEmailErrMsg(errMsg);
       setFirstNameErrMsg('');
-      setLastNameErrMsg('');
       setPhoneErrMsg('');
       setAddressErrMsg('');
     } else if (errCategory === 'firstname') {
       setFirstNameErrMsg(errMsg);
-      setLastNameErrMsg('');
       setEmailErrMsg('');
-      setPhoneErrMsg('');
-      setAddressErrMsg('');
-    } else if (errCategory === 'lastname') {
-      setLastNameErrMsg(errMsg);
-      setEmailErrMsg('');
-      setFirstNameErrMsg('');
       setPhoneErrMsg('');
       setAddressErrMsg('');
     } else if (errCategory === 'phone') {
       setPhoneErrMsg(errMsg);
       setFirstNameErrMsg('');
-      setLastNameErrMsg('');
       setEmailErrMsg('');
       setAddressErrMsg('');
     } else if (errCategory === 'address') {
       setAddressErrMsg(errMsg);
       setPhoneErrMsg('');
       setFirstNameErrMsg('');
-      setLastNameErrMsg('');
       setEmailErrMsg('');
     }
   };
@@ -130,7 +110,6 @@ const ConfirmOrder = (props) => {
   };
 
   const changeFirstName = (t) => setFirstName(t);
-  const changeLastName = (t) => setLastName(t);
   const changeEmail = (t) => setEmail(t);
   const changePhone = (t) => setPhone(t);
   const changeAddress = (t) => setAddress(t);
@@ -145,20 +124,8 @@ const ConfirmOrder = (props) => {
           leftIconName="arrowleft"
           leftIconAction={goBack}
         />
-        <View style={styles.summaryOverlay}>
-          <View style={styles.sm1}>
-            <View style={styles.sm2}>
-              <Text>Total:</Text>
-              <Text style={{fontWeight: 'bold'}}>${props.total}</Text>
-            </View>
-            <View style={styles.sm3}>
-              <Text style={styles.sm4}>Payment Mode:</Text>
-              <Text style={styles.sm4}>Payment on delivery</Text>
-            </View>
-          </View>
-        </View>
         <View style={styles.personalInfoWrapper}>
-          <Text style={styles.personalInfoHeader}>Contact Info</Text>
+          <Text style={styles.personalInfoHeader}>Your Personal Info</Text>
         </View>
         <View style={styles.PersonalInfoWrapper}>
           <View style={styles.singlePersonalInfoWrapper}>
@@ -167,7 +134,7 @@ const ConfirmOrder = (props) => {
                 ...styles.personalInfoHeadingName,
                 color: firstNameErrMsg ? 'red' : colors.primary,
               }}>
-              FIRST NAME <Text> {firstNameErrMsg}</Text>
+              FULL NAME <Text> {firstNameErrMsg}</Text>
             </Text>
             <View style={styles.personalInfoInputWrapper}>
               <Feather
@@ -176,30 +143,9 @@ const ConfirmOrder = (props) => {
                 style={styles.inputIcon}
               />
               <TextInput
-                placeholder="First Name"
+                placeholder="Full Name"
                 style={styles.Input}
                 onChangeText={changeFirstName}
-              />
-            </View>
-          </View>
-          <View style={styles.singlePersonalInfoWrapper}>
-            <Text
-              style={{
-                ...styles.personalInfoHeadingName,
-                color: lastNameErrMsg ? 'red' : colors.primary,
-              }}>
-              LAST NAME <Text> {lastNameErrMsg}</Text>
-            </Text>
-            <View style={styles.personalInfoInputWrapper}>
-              <Feather
-                name="user"
-                size={dim.width * 0.07}
-                style={styles.inputIcon}
-              />
-              <TextInput
-                placeholder="Last Name"
-                style={styles.Input}
-                onChangeText={changeLastName}
               />
             </View>
           </View>
@@ -230,7 +176,7 @@ const ConfirmOrder = (props) => {
                 ...styles.personalInfoHeadingName,
                 color: phoneErrMsg ? 'red' : colors.primary,
               }}>
-              PHONE<Text> {phoneErrMsg}</Text>
+              PHONE NUMBER<Text> {phoneErrMsg}</Text>
             </Text>
             <View style={styles.personalInfoInputWrapper}>
               <Feather
@@ -265,6 +211,18 @@ const ConfirmOrder = (props) => {
                 style={styles.Input}
                 onChangeText={changeAddress}
               />
+            </View>
+          </View>
+        </View>
+        <View style={styles.summaryOverlay}>
+          <View style={styles.sm1}>
+            <View style={styles.sm2}>
+              <Text>Total:</Text>
+              <Text style={{fontWeight: 'bold'}}>${props.total}</Text>
+            </View>
+            <View style={styles.sm3}>
+              <Text style={styles.sm4}>Payment Mode:</Text>
+              <Text style={styles.sm4}>Payment on delivery</Text>
             </View>
           </View>
         </View>
