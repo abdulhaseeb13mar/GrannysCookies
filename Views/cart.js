@@ -156,6 +156,7 @@ export const Cart = (props) => {
               }}
               buttonStyle={{
                 paddingVertical: dim.height * 0.015,
+                borderRadius: 50,
                 backgroundColor: colors.secondary,
               }}
               containerStyle={{

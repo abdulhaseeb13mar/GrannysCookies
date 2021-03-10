@@ -10,6 +10,7 @@ import dim from '../Helpers/heightWidth';
 import {Button, Overlay} from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {isFormValid} from '../Helpers/validate';
 import NavPointer from '../Navigation/NavPointer';
 import {UserAction, resetCart} from '../Redux/actions';
@@ -25,7 +26,7 @@ const ConfirmOrder = (props) => {
   const [phoneErrMsg, setPhoneErrMsg] = useState('');
   const [address, setAddress] = useState('');
   const [addressErrMsg, setAddressErrMsg] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const Confirm = () => {
@@ -242,14 +243,14 @@ const ConfirmOrder = (props) => {
           onBackdropPress={closeModal}
           animationType="fade">
           <View style={styles.ModalWrapper}>
-            <FontAwesome
-              name="check-circle-o"
+            <FontAwesome5
+              name="cookie-bite"
               size={dim.width * 0.25}
               color={colors.primary}
             />
             <Text style={styles.ModalHeadText}>THANK YOU!</Text>
             <Text style={styles.ModalSubText}>
-              Your Order has been confirmed
+              You will get your cookies shortly!
             </Text>
           </View>
         </Overlay>
@@ -368,6 +369,7 @@ const styles = StyleSheet.create({
   confirmButton: {
     backgroundColor: colors.primary,
     padding: dim.height * 0.018,
+    borderRadius: 50,
   },
   ConfirmButtonWrapper: {
     display: 'flex',
