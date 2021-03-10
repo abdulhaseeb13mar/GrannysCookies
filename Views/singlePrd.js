@@ -220,6 +220,7 @@ function SinglePrd(props) {
               titleStyle={{fontSize: dim.width * 0.05}}
               buttonStyle={{
                 paddingVertical: dim.height * 0.015,
+                borderRadius: 50,
                 backgroundColor: colors.primary,
               }}
               containerStyle={{

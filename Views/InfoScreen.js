@@ -26,7 +26,7 @@ const ConfirmOrder = (props) => {
   const [phoneErrMsg, setPhoneErrMsg] = useState('');
   const [address, setAddress] = useState('');
   const [addressErrMsg, setAddressErrMsg] = useState('');
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const Confirm = () => {
