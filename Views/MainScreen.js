@@ -64,7 +64,7 @@ function MainScreen(props) {
           rightIconAction={GotoCart}
           rightIcon={Feather}
           rightIconName="shopping-bag"
-          Title="Bunny Cookies"
+          Title="Granny's Cookies"
         />
         <Text
           style={{
